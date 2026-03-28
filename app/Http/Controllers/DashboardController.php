@@ -52,12 +52,21 @@ class DashboardController extends Controller
 
     public function admin()
     {
+        $clients = User::where('role', 'client')
+            ->orderBy('name')
+            ->get();
+
+        $lawyers = User::with('lawyerProfile')
+            ->where('role', 'avocat')
+            ->orderBy('name')
+            ->get();
+
         $stats = [
             'users' => User::count(),
-            'lawyers' => User::where('role', 'avocat')->count(),
-            'appointments_today' => 0,
+            'clients' => $clients->count(),
+            'lawyers' => $lawyers->count(),
         ];
 
-        return view('admin.tableau-de-bord', compact('stats'));
+        return view('admin.tableau-de-bord', compact('stats', 'clients', 'lawyers'));
     }
 }
