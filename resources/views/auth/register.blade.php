@@ -19,9 +19,10 @@
         <!-- Type de compte -->
         <div class="mt-4">
             <label for="role">Type de compte</label>
-            <select name="role" required class="block mt-1 w-full">
-                <option value="client">Client</option>
-                <option value="avocat">Avocat</option>
+            @php $selectedRole = old('role', request('role', 'client')); @endphp
+            <select name="role" required class="block mt-1 w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-[#1A2B42] focus:border-[#1A2B42] focus:ring-[#1A2B42]">
+                <option value="client" {{ $selectedRole === 'client' ? 'selected' : '' }}>Client</option>
+                <option value="avocat" {{ $selectedRole === 'avocat' ? 'selected' : '' }}>Avocat</option>
             </select>
         </div>
 

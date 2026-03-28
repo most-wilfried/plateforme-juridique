@@ -6,6 +6,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Appointment;
+use App\Models\Document;
+use App\Models\LawyerProfile;
+use App\Models\Message;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -43,4 +47,44 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function lawyerProfile()
+    {
+        return $this->hasOne(LawyerProfile::class);
+    }
+
+    public function appointmentsAsClient()
+    {
+        return $this->hasMany(Appointment::class, 'client_id');
+    }
+
+    public function appointmentsAsLawyer()
+    {
+        return $this->hasMany(Appointment::class, 'lawyer_id');
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
+
+    public function sentMessages()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->hasMany(Message::class, 'receiver_id');
+    }
+
+    public function getUnreadMessagesCountAttribute()
+    {
+        return $this->receivedMessages()->where('is_read', false)->count();
+    }
+
+    public function hasCompletedLawyerProfile(): bool
+    {
+        return $this->role === 'avocat' && $this->lawyerProfile?->isCompleted();
+    }
 }
