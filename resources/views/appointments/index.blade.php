@@ -34,6 +34,21 @@
                                     <p class="font-semibold">{{ $appointment->notes ? 'Notes enregistrées' : 'Pas de notes' }}</p>
                                 </div>
                             </div>
+
+                            @if($user->role === 'avocat' && $appointment->status === 'pending')
+                                <div class="mt-4 flex flex-col gap-3 sm:flex-row">
+                                    <form action="{{ route('appointments.accept', $appointment) }}" method="POST" class="flex-1">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="w-full rounded-full bg-[#1A2B42] px-5 py-3 text-sm font-semibold text-white hover:bg-[#15203a]">Accepter</button>
+                                    </form>
+                                    <form action="{{ route('appointments.reject', $appointment) }}" method="POST" class="flex-1">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="w-full rounded-full border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-[#1A2B42] hover:bg-[#F8FAFC]">Refuser</button>
+                                    </form>
+                                </div>
+                            @endif
                         </article>
                     @empty
                         <x-empty-state title="Aucun rendez-vous">

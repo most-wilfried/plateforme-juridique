@@ -5,6 +5,9 @@
                 <h2 class="font-semibold text-xl text-[#1A2B42] leading-tight">Tableau de bord administrateur</h2>
                 <p class="text-sm text-[#6B7280]">Gestion des utilisateurs, clients et avocats de la plateforme.</p>
             </div>
+            <div>
+                <a href="{{ route('admin.lawyers.pending') }}" class="inline-flex items-center justify-center rounded-full bg-[#1A2B42] px-5 py-3 text-sm font-semibold text-white hover:bg-[#15203a]">Valider les comptes avocats</a>
+            </div>
         </div>
     </x-slot>
 

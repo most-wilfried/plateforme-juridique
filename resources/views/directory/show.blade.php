@@ -57,8 +57,28 @@
                 <aside class="space-y-6">
                     <div class="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">
                         <h2 class="text-lg font-semibold text-[#1A2B42]">Prendre contact</h2>
-                        <p class="mt-3 text-sm text-[#4B5563]">Envoyez un message à cet avocat pour discuter de votre dossier.</p>
-                        <a href="{{ route('messages.show', $user) }}" class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[#1A2B42] px-5 py-3 text-sm font-semibold text-white hover:bg-[#15203a]">Contacter</a>
+                        @auth
+                            @if(auth()->user()->role === 'client')
+                                @if($existingRequest)
+                                    <p class="mt-3 text-sm text-[#4B5563]">Vous avez déjà demandé un rendez-vous avec cet avocat.</p>
+                                    <p class="mt-3 text-sm font-semibold text-[#1A2B42]">Statut : {{ ucfirst($existingRequest->status) }}</p>
+                                    @if($existingRequest->status === 'accepted')
+                                        <a href="{{ route('messages.show', $user) }}" class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[#1A2B42] px-5 py-3 text-sm font-semibold text-white hover:bg-[#15203a]">Contacter</a>
+                                    @endif
+                                @else
+                                    <p class="mt-3 text-sm text-[#4B5563]">Envoyez une demande de rendez-vous à cet avocat pour pouvoir échanger.</p>
+                                    <form action="{{ route('appointments.request', $user) }}" method="POST" class="mt-6 space-y-4">
+                                        @csrf
+                                        <textarea name="notes" rows="4" placeholder="Décrivez brièvement votre besoin..." class="block w-full rounded-3xl border border-gray-300 bg-white px-4 py-3 text-sm text-[#1A2B42] shadow-sm focus:border-[#1A2B42] focus:ring-[#1A2B42]"></textarea>
+                                        <button type="submit" class="inline-flex w-full items-center justify-center rounded-full bg-[#1A2B42] px-5 py-3 text-sm font-semibold text-white hover:bg-[#15203a]">Demander un rendez-vous</button>
+                                    </form>
+                                @endif
+                            @else
+                                <p class="mt-3 text-sm text-[#4B5563]">Connectez-vous en tant que client pour faire une demande à cet avocat.</p>
+                            @endif
+                        @else
+                            <p class="mt-3 text-sm text-[#4B5563]">Connectez-vous pour envoyer une demande de rendez-vous.</p>
+                        @endauth
                     </div>
 
                     <div class="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">

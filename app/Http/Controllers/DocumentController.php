@@ -16,10 +16,17 @@ class DocumentController extends Controller
 
         $documents = Document::with(['appointment', 'user'])
             ->where(function ($query) use ($user) {
-                $query->where('user_id', $user->id)
-                    ->orWhereHas('appointment', function ($query) use ($user) {
-                        $query->where('lawyer_id', $user->id);
-                    });
+                if ($user->role === 'avocat') {
+                    $query->where('user_id', $user->id)
+                        ->orWhereHas('appointment', function ($query) use ($user) {
+                            $query->where('lawyer_id', $user->id);
+                        })
+                        ->orWhereHas('user.appointmentsAsClient', function ($query) use ($user) {
+                            $query->where('lawyer_id', $user->id);
+                        });
+                } else {
+                    $query->where('user_id', $user->id);
+                }
             })
             ->latest()
             ->get();

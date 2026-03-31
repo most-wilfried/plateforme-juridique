@@ -13,7 +13,8 @@ class DocumentPolicy
     public function view(User $user, Document $document): bool
     {
         return $document->user_id === $user->id
-            || ($document->appointment?->lawyer_id === $user->id);
+            || ($document->appointment?->lawyer_id === $user->id)
+            || ($user->role === 'avocat' && $document->user?->appointmentsAsClient()->where('lawyer_id', $user->id)->exists());
     }
 
     public function download(User $user, Document $document): bool

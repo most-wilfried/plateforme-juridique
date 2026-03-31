@@ -39,7 +39,7 @@ Route::get('/dashboard', function () {
     };
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'approved'])->group(function () {
     Route::get('/client/tableau-de-bord', [DashboardController::class, 'client'])
         ->middleware('role:client')
         ->name('client.dashboard');
@@ -51,6 +51,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/tableau-de-bord', [DashboardController::class, 'admin'])
         ->middleware('role:admin')
         ->name('admin.dashboard');
+
+    Route::get('/admin/avocats/attente-validation', [\App\Http\Controllers\Admin\LawyerApprovalController::class, 'index'])
+        ->middleware('role:admin')
+        ->name('admin.lawyers.pending');
+
+    Route::post('/admin/avocats/{lawyer}/approuver', [\App\Http\Controllers\Admin\LawyerApprovalController::class, 'approve'])
+        ->middleware('role:admin')
+        ->name('admin.lawyers.approve');
 
     Route::get('/messages', [MessageController::class, 'index'])
         ->name('messages.index');
@@ -72,6 +80,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/rendez-vous', [AppointmentController::class, 'index'])
         ->name('appointments.index');
+
+    Route::post('/annuaire/{user}/demande', [AppointmentController::class, 'store'])
+        ->middleware('role:client')
+        ->name('appointments.request');
+
+    Route::patch('/rendez-vous/{appointment}/accepter', [AppointmentController::class, 'accept'])
+        ->middleware('role:avocat')
+        ->name('appointments.accept');
+
+    Route::patch('/rendez-vous/{appointment}/refuser', [AppointmentController::class, 'reject'])
+        ->middleware('role:avocat')
+        ->name('appointments.reject');
+
+    Route::get('/avocat/attente-validation', [DashboardController::class, 'lawyerPending'])
+        ->name('lawyer.pending');
 
     Route::get('/avocat/profil', [LawyerProfileController::class, 'edit'])
         ->middleware('role:avocat')

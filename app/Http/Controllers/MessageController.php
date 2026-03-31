@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -9,6 +10,25 @@ use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
+    private function hasAcceptedAppointment(User $auth, User $other): bool
+    {
+        if ($auth->role === 'client' && $other->role === 'avocat') {
+            return Appointment::where('client_id', $auth->id)
+                ->where('lawyer_id', $other->id)
+                ->where('status', 'accepted')
+                ->exists();
+        }
+
+        if ($auth->role === 'avocat' && $other->role === 'client') {
+            return Appointment::where('client_id', $other->id)
+                ->where('lawyer_id', $auth->id)
+                ->where('status', 'accepted')
+                ->exists();
+        }
+
+        return false;
+    }
+
     public function index()
     {
         $user = Auth::user();
@@ -29,6 +49,8 @@ class MessageController extends Controller
         $auth = Auth::user();
 
         abort_if($user->id === $auth->id, 403);
+
+        abort_unless($this->hasAcceptedAppointment($auth, $user), 403);
 
         $messages = Message::where(function ($query) use ($auth, $user) {
             $query->where('sender_id', $auth->id)
@@ -51,6 +73,7 @@ class MessageController extends Controller
         $auth = Auth::user();
 
         abort_if($user->id === $auth->id, 403);
+        abort_unless($this->hasAcceptedAppointment($auth, $user), 403);
 
         $validated = $request->validate([
             'content' => 'required|string|max:2000',

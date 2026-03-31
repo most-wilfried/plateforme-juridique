@@ -26,6 +26,8 @@ class User extends Authenticatable
         'email',
         'role',
         'password',
+        'is_approved',
+        'approved_at',
     ];
 
     /**
@@ -46,6 +48,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_approved' => 'boolean',
+        'approved_at' => 'datetime',
     ];
 
     public function lawyerProfile()
@@ -86,5 +90,15 @@ class User extends Authenticatable
     public function hasCompletedLawyerProfile(): bool
     {
         return $this->role === 'avocat' && $this->lawyerProfile?->isCompleted();
+    }
+
+    public function isApproved(): bool
+    {
+        return $this->role !== 'avocat' || $this->is_approved;
+    }
+
+    public function isApprovalPending(): bool
+    {
+        return $this->role === 'avocat' && !$this->is_approved;
     }
 }

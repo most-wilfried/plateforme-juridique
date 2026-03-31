@@ -45,7 +45,10 @@ class DashboardController extends Controller
             ->get();
 
         $appointments = $user->appointmentsAsLawyer()->latest('start_time')->take(5)->get();
-        $documentsCount = Document::whereHas('appointment', fn ($query) => $query->where('lawyer_id', $user->id))->count();
+        $documentsCount = Document::where(function ($query) use ($user) {
+            $query->whereHas('appointment', fn ($query) => $query->where('lawyer_id', $user->id))
+                ->orWhereHas('user.appointmentsAsClient', fn ($query) => $query->where('lawyer_id', $user->id));
+        })->count();
 
         return view('avocat.tableau-de-bord', compact('user', 'messages', 'clients', 'appointments', 'documentsCount'));
     }
@@ -68,5 +71,12 @@ class DashboardController extends Controller
         ];
 
         return view('admin.tableau-de-bord', compact('stats', 'clients', 'lawyers'));
+    }
+
+    public function lawyerPending()
+    {
+        $user = Auth::user();
+
+        return view('auth.pending-validation', compact('user'));
     }
 }

@@ -24,6 +24,16 @@ class DirectoryController extends Controller
         abort_if($user->role !== 'avocat', 404);
         abort_if(!$user->lawyerProfile?->isCompleted(), 404);
 
-        return view('directory.show', compact('user'));
+        $existingRequest = null;
+        $auth = auth()->user();
+
+        if ($auth && $auth->role === 'client') {
+            $existingRequest = $auth->appointmentsAsClient()
+                ->where('lawyer_id', $user->id)
+                ->latest()
+                ->first();
+        }
+
+        return view('directory.show', compact('user', 'existingRequest'));
     }
 }
