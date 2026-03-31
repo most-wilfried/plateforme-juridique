@@ -11,6 +11,10 @@
                 </div>
             </div>
 
+            @if(session('success'))
+                <div class="mb-6 rounded-3xl border border-green-200 bg-green-50 px-6 py-4 text-sm text-green-800">{{ session('success') }}</div>
+            @endif
+
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 @forelse($lawyers as $lawyer)
                     <article class="overflow-hidden rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
