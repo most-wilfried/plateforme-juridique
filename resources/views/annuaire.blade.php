@@ -40,10 +40,30 @@
                             <span class="text-base font-semibold text-[#1A2B42]">{{ $lawyer->lawyerProfile->currency ?? '€' }}{{ number_format($lawyer->lawyerProfile->hourly_rate ?? 0, 2, ',', ' ') }}/h</span>
                         </div>
 
-                        <div class="mt-6">
-                            <a href="{{ route('directory.show', $lawyer) }}" class="inline-flex w-full items-center justify-center rounded-full bg-[#1A2B42] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#15203a]">
-                                Consulter
-                            </a>
+                        <div class="mt-6 space-y-3">
+                            @auth
+                                @if(auth()->user()->role === 'admin')
+                                    <div class="flex flex-col gap-3">
+                                        @if($lawyer->is_approved)
+                                            <div class="rounded-full bg-green-50 px-4 py-2 text-sm font-semibold text-green-800">Avocat validé</div>
+                                            <a href="{{ route('directory.show', $lawyer) }}" class="inline-flex w-full items-center justify-center rounded-full bg-[#1A2B42] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#15203a]">Voir le profil</a>
+                                        @else
+                                            <form action="{{ route('admin.lawyers.approve', $lawyer) }}" method="POST" class="inline-flex w-full">
+                                                @csrf
+                                                <button type="submit" class="inline-flex w-full items-center justify-center rounded-full bg-[#1A2B42] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#15203a]">Valider l'accès</button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                @else
+                                    <a href="{{ route('directory.show', $lawyer) }}" class="inline-flex w-full items-center justify-center rounded-full bg-[#1A2B42] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#15203a]">
+                                        Consulter
+                                    </a>
+                                @endif
+                            @else
+                                <a href="{{ route('directory.show', $lawyer) }}" class="inline-flex w-full items-center justify-center rounded-full bg-[#1A2B42] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#15203a]">
+                                    Consulter
+                                </a>
+                            @endauth
                         </div>
                     </article>
                 @empty

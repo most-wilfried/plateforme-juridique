@@ -63,7 +63,20 @@
                                     <p class="mt-3 text-sm text-[#4B5563]">Vous avez déjà demandé un rendez-vous avec cet avocat.</p>
                                     <p class="mt-3 text-sm font-semibold text-[#1A2B42]">Statut : {{ ucfirst($existingRequest->status) }}</p>
                                     @if($existingRequest->status === 'accepted')
-                                        <a href="{{ route('messages.show', $user) }}" class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[#1A2B42] px-5 py-3 text-sm font-semibold text-white hover:bg-[#15203a]">Contacter</a>
+                                        @auth
+                            @if(auth()->user()->role === 'admin')
+                                @if($user->is_approved)
+                                    <div class="rounded-full bg-green-50 px-4 py-2 text-sm font-semibold text-green-800">Avocat déjà validé</div>
+                                @else
+                                    <form action="{{ route('admin.lawyers.approve', $user) }}" method="POST" class="mt-6 inline-flex w-full">
+                                        @csrf
+                                        <button type="submit" class="inline-flex w-full items-center justify-center rounded-full bg-[#1A2B42] px-5 py-3 text-sm font-semibold text-white hover:bg-[#15203a]">Valider l'accès</button>
+                                    </form>
+                                @endif
+                            @elseif(auth()->user()->role === 'client')
+                                <a href="{{ route('messages.show', $user) }}" class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[#1A2B42] px-5 py-3 text-sm font-semibold text-white hover:bg-[#15203a]">Contacter</a>
+                            @endif
+                        @endauth
                                     @endif
                                 @else
                                     <p class="mt-3 text-sm text-[#4B5563]">Envoyez une demande de rendez-vous à cet avocat pour pouvoir échanger.</p>
