@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -14,9 +13,14 @@ return new class extends Migration
         }
 
         if (Schema::hasColumn('appointments', 'start_time') && Schema::hasColumn('appointments', 'end_time')) {
-            DB::statement(
-                'ALTER TABLE `appointments` MODIFY `start_time` DATETIME NULL, MODIFY `end_time` DATETIME NULL'
-            );
+            $driver = Schema::getConnection()->getDriverName();
+
+            if ($driver === 'mysql') {
+                DB::statement('ALTER TABLE appointments MODIFY start_time DATETIME NULL, MODIFY end_time DATETIME NULL');
+            } elseif ($driver === 'pgsql') {
+                DB::statement('ALTER TABLE appointments ALTER COLUMN start_time DROP NOT NULL');
+                DB::statement('ALTER TABLE appointments ALTER COLUMN end_time DROP NOT NULL');
+            }
         }
     }
 
@@ -27,9 +31,14 @@ return new class extends Migration
         }
 
         if (Schema::hasColumn('appointments', 'start_time') && Schema::hasColumn('appointments', 'end_time')) {
-            DB::statement(
-                'ALTER TABLE `appointments` MODIFY `start_time` DATETIME NOT NULL, MODIFY `end_time` DATETIME NOT NULL'
-            );
+            $driver = Schema::getConnection()->getDriverName();
+
+            if ($driver === 'mysql') {
+                DB::statement('ALTER TABLE appointments MODIFY start_time DATETIME NOT NULL, MODIFY end_time DATETIME NOT NULL');
+            } elseif ($driver === 'pgsql') {
+                DB::statement('ALTER TABLE appointments ALTER COLUMN start_time SET NOT NULL');
+                DB::statement('ALTER TABLE appointments ALTER COLUMN end_time SET NOT NULL');
+            }
         }
     }
 };
