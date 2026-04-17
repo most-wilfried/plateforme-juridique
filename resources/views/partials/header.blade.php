@@ -8,6 +8,23 @@
                 </div>
                 <span class="text-xl font-semibold text-[#1A2B42]">JuriConseil</span>
             </a>
+            <div class="relative" x-data="{ openProjects: false }">
+                <button @click="openProjects = !openProjects" class="inline-flex items-center gap-2 rounded-full bg-[#F3F4F6] px-3 py-2 text-sm font-medium text-[#1A2B42] hover:bg-[#E5E7EB]">
+                    Projets
+                    <span class="text-xs">▼</span>
+                </button>
+                <div x-show="openProjects" x-cloak @click.outside="openProjects = false" class="absolute left-0 z-10 mt-2 w-64 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-xl">
+                    <div class="border-b border-gray-100 px-4 py-3">
+                        <p class="text-sm font-semibold text-[#1A2B42]">Changer de projet</p>
+                    </div>
+                    <div class="space-y-1 px-4 py-3">
+                        <a href="http://localhost:8000" class="block rounded-2xl px-4 py-2 text-sm text-[#1A2B42] hover:bg-[#F8FAFC]">Agenda Familial</a>
+                        <a href="http://localhost:8001" class="block rounded-2xl px-4 py-2 text-sm text-[#1A2B42] hover:bg-[#F8FAFC]">Juridique</a>
+                        <a href="http://localhost:8002" class="block rounded-2xl px-4 py-2 text-sm text-[#1A2B42] hover:bg-[#F8FAFC]">Mon Projet</a>
+                        <a href="http://localhost:8003" class="block rounded-2xl px-4 py-2 text-sm text-[#1A2B42] hover:bg-[#F8FAFC]">Test</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <nav class="hidden flex-1 items-center justify-center gap-6 text-sm font-medium text-[#4B5563] md:flex">

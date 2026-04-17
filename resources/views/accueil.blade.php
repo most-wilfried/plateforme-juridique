@@ -53,38 +53,38 @@
             <p class="mx-auto mt-4 max-w-2xl text-base text-[#4B5563]">Trouvez un avocat spécialisé dans votre domaine</p>
 
             <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                <div class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm">
+                <a href="{{ route('directory.index', ['specialty' => 'Droit de la famille']) }}" class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm hover:bg-[#E5E7EB] transition">
                     <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[#1A2B42] shadow-sm">⚖</div>
                     <h3 class="text-xl font-semibold text-[#1A2B42]">Droit de la famille</h3>
-                </div>
-                <div class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm">
+                </a>
+                <a href="{{ route('directory.index', ['specialty' => 'Droit pénal']) }}" class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm hover:bg-[#E5E7EB] transition">
                     <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[#1A2B42] shadow-sm">⚖</div>
                     <h3 class="text-xl font-semibold text-[#1A2B42]">Droit pénal</h3>
-                </div>
-                <div class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm">
+                </a>
+                <a href="{{ route('directory.index', ['specialty' => 'Droit du travail']) }}" class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm hover:bg-[#E5E7EB] transition">
                     <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[#1A2B42] shadow-sm">⚖</div>
                     <h3 class="text-xl font-semibold text-[#1A2B42]">Droit du travail</h3>
-                </div>
-                <div class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm">
+                </a>
+                <a href="{{ route('directory.index', ['specialty' => 'Droit commercial']) }}" class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm hover:bg-[#E5E7EB] transition">
                     <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[#1A2B42] shadow-sm">⚖</div>
                     <h3 class="text-xl font-semibold text-[#1A2B42]">Droit commercial</h3>
-                </div>
-                <div class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm">
+                </a>
+                <a href="{{ route('directory.index', ['specialty' => 'Droit immobilier']) }}" class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm hover:bg-[#E5E7EB] transition">
                     <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[#1A2B42] shadow-sm">⚖</div>
                     <h3 class="text-xl font-semibold text-[#1A2B42]">Droit immobilier</h3>
-                </div>
-                <div class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm">
+                </a>
+                <a href="{{ route('directory.index', ['specialty' => 'Droit des affaires']) }}" class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm hover:bg-[#E5E7EB] transition">
                     <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[#1A2B42] shadow-sm">⚖</div>
                     <h3 class="text-xl font-semibold text-[#1A2B42]">Droit des affaires</h3>
-                </div>
-                <div class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm">
+                </a>
+                <a href="{{ route('directory.index', ['specialty' => 'Droit fiscal']) }}" class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm hover:bg-[#E5E7EB] transition">
                     <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[#1A2B42] shadow-sm">⚖</div>
                     <h3 class="text-xl font-semibold text-[#1A2B42]">Droit fiscal</h3>
-                </div>
-                <div class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm">
+                </a>
+                <a href="{{ route('directory.index', ['specialty' => 'Droit de la propriété intellectuelle']) }}" class="rounded-3xl bg-[#F3F4F6] p-6 text-left shadow-sm hover:bg-[#E5E7EB] transition">
                     <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[#1A2B42] shadow-sm">⚖</div>
                     <h3 class="text-xl font-semibold text-[#1A2B42]">Droit de la propriété intellectuelle</h3>
-                </div>
+                </a>
             </div>
         </div>
     </section>

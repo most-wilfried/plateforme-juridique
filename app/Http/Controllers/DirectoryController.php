@@ -7,14 +7,21 @@ use Illuminate\Http\Request;
 
 class DirectoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $lawyers = User::with('lawyerProfile')
+        $query = User::with('lawyerProfile')
             ->where('role', 'avocat')
             ->whereHas('lawyerProfile', function ($query) {
                 $query->completed();
-            })
-            ->get();
+            });
+
+        if ($request->has('specialty') && $request->specialty) {
+            $query->whereHas('lawyerProfile', function ($q) use ($request) {
+                $q->whereJsonContains('specialties', $request->specialty);
+            });
+        }
+
+        $lawyers = $query->get();
 
         return view('annuaire', compact('lawyers'));
     }

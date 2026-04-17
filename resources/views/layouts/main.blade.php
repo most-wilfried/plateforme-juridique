@@ -19,5 +19,25 @@
 
     @include('partials.footer')
 
+    <!-- Bouton scroll to bottom -->
+    <button id="scrollToBottom" class="fixed bottom-6 right-6 z-50 hidden h-12 w-12 items-center justify-center rounded-full bg-[#1A2B42] text-white shadow-lg hover:bg-[#15203a] md:flex">
+        <span class="text-lg">↓</span>
+    </button>
+
+    <script>
+        document.getElementById('scrollToBottom').addEventListener('click', function() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        });
+
+        window.addEventListener('scroll', function() {
+            const button = document.getElementById('scrollToBottom');
+            if (window.scrollY > 100) {
+                button.classList.remove('hidden');
+            } else {
+                button.classList.add('hidden');
+            }
+        });
+    </script>
+
 </body>
 </html>
