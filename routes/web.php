@@ -20,9 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('accueil');
-})->name('accueil');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('accueil');
 
 Route::get('/dashboard', function () {
     $user = auth()->user();

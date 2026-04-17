@@ -18,12 +18,12 @@
                     Consultez un avocat qualifié en ligne. Simple, sécurisé et professionnel. Trouvez l'expert qu'il vous faut et obtenez des conseils juridiques personnalisés.
                 </p>
 
-                <div class="w-full max-w-3xl rounded-full bg-white p-2 shadow-sm sm:flex sm:items-center">
-                    <div class="flex items-center gap-3 px-4 py-3 text-[#1A2B42] sm:flex-1">
+                <div class="w-full max-w-3xl rounded-full bg-white p-2 shadow-sm flex flex-col sm:flex-row sm:items-center">
+                    <div class="flex items-center gap-3 px-4 py-3 text-[#1A2B42] flex-1">
                         <span class="text-xl">🔍</span>
                         <input type="search" placeholder="Rechercher par spécialité..." class="w-full border-0 bg-transparent text-sm text-[#1A2B42] outline-none placeholder:text-[#9CA3AF]" />
                     </div>
-                    <button class="mt-3 inline-flex w-full items-center justify-center rounded-full bg-[#1A2B42] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#15203a] sm:mt-0 sm:w-auto">
+                    <button class="mt-3 sm:mt-0 inline-flex w-full sm:w-auto items-center justify-center rounded-full bg-[#1A2B42] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#15203a]">
                         Rechercher
                         <span class="ml-2">→</span>
                     </button>
@@ -32,7 +32,7 @@
                 <div class="grid w-full max-w-3xl grid-cols-1 gap-4 text-sm text-[#D1D5DB] sm:grid-cols-3">
                     <div class="flex items-center justify-center gap-3 rounded-2xl bg-white/10 px-4 py-3">
                         <span class="text-lg">👥</span>
-                        <span>6 avocats</span>
+                        <span>{{ $lawyerCount }} avocats</span>
                     </div>
                     <div class="flex items-center justify-center gap-3 rounded-2xl bg-white/10 px-4 py-3">
                         <span class="text-lg">⭐</span>
